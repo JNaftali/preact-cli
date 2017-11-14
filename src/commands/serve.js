@@ -228,7 +228,9 @@ const SERVERS = {
 		}, null, 2);
 
 		if (outfile) {
-			await fs.writeFile(path.resolve(dir, outfile), config);
+			let fullconfig = await readJSON(path.resolve(dir, outfile)) || {};
+			fullconfig.hosting = config
+			await fs.writeFile(path.resolve(dir, outfile), fullconfig);
 			return `Configuration written to ${outfile}.`;
 		} else {
 			return config;
